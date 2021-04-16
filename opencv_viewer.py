@@ -1,9 +1,21 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
+import time
 
 rs.log_to_file(rs.log_severity.debug, file_path='./log.txt')
+'''
+# resetting
+print('Resetting devices...')
+ctx = rs.context()
+devices = ctx.query_devices()
+for dev in devices:
+    dev.hardware_reset()
+    time.sleep(1)
 
+time.sleep(5.)
+print('Done resetting')
+'''
 device = rs.context().devices[0]
 serial_number = device.get_info(rs.camera_info.serial_number)
 print('Camera serial number: {}'.format(serial_number))
@@ -20,10 +32,16 @@ config.enable_stream(rs.stream.depth)#, 640, 480, rs.format.z16, 30)
 config.enable_stream(rs.stream.color, 1920, 1080, rs.format.rgb8, 30)
 
 profile = pipeline.start(config)
-color_sensor = profile.get_device().query_sensors()[1]
-# color_sensor.set_option(rs.option.enable_auto_exposure, True)
-color_sensor.set_option(rs.option.exposure, 6920)
-print(color_sensor.get_option(rs.option.exposure))
+
+sensor = pipeline.get_active_profile().get_device().query_sensors()[1]
+sensor.set_option(rs.option.exposure, 1600.000)
+# sensor.set_option(rs.option.enable_auto_exposure, True)
+print('Setting parameters...')
+time.sleep(5.)
+
+#color_sensor = profile.get_device().query_sensors()[1]
+#color_sensor.set_option(rs.option.enable_auto_exposure, True)
+
 try:
     frames = pipeline.wait_for_frames()
     depth_frame = frames.get_depth_frame()
