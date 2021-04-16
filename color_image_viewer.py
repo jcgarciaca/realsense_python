@@ -33,7 +33,6 @@ try:
         
         # convert images to numpy array
         color_image = np.asanyarray(color_frame.get_data())
-        color_image_dim = color_image.shape
         print('color_image shape', color_image.shape)
         
         if save_image:
