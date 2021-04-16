@@ -48,6 +48,7 @@ try:
             cv2.destroyAllWindows()
             break
         
-    pipeline.stop()
+except:
+    print('Error with camera')
 finally:
     pipeline.stop()
