@@ -21,9 +21,11 @@ for idx in range(len(devices_)):
     pipelines[idx].start(configs[idx])
 
 save_image = False
+current_idx = None
 try:
     while True:
         for idx in range(len(devices_)):
+            current_idx = idx
             frames = pipelines[idx].wait_for_frames()
             depth_frame = frames.get_depth_frame()
             if not depth_frame:
@@ -49,7 +51,7 @@ try:
             break
         
 except:
-    print('Error with camera')
+    print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
 finally:
     for idx in range(len(devices_)):
         pipelines[idx].stop()

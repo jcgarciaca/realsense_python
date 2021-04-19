@@ -25,9 +25,11 @@ for idx in range(len(devices_)):
     sensors[idx].set_option(rs.option.enable_auto_exposure, True)
 
 save_image = False
+current_idx = None
 try:
     while True:
         for idx in range(len(devices_)):
+            current_idx = idx
             frames = pipelines[idx].wait_for_frames()
             color_frame = frames.get_color_frame()
             if not color_frame:
@@ -50,7 +52,7 @@ try:
             break
         
 except:
-    print('Error with camera')
+    print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
 finally:
     for idx in range(len(devices_)):
         pipelines[idx].stop()
