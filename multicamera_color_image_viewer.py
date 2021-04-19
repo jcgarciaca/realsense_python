@@ -7,10 +7,14 @@ import time
 devices_ = rs.context().query_devices()
 print('Found {} connected devices'.format(len(devices_)))
 
+serial_numbers = []
+for dev_ in devices_:
+    serial_numbers.append(dev_.get_info(rs.camera_info.serial_number))
+
 pipelines = []
 configs = []
 sensors = []
-serial_numbers = ['617206002005', '619205000114', '617204007038', '617204000030']
+
 for idx in range(len(devices_)):
     pipelines.append(rs.pipeline())
     configs.append(rs.config())
