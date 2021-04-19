@@ -43,8 +43,8 @@ try:
                 cv2.imwrite('images/color_camera_{}.png'.format(idx + 1), color_image)
 
             # show image
-            cv2.namedWindow('Color Image Cam {}'.format(idx + 1), cv2.WINDOW_NORMAL)
-            cv2.imshow('Color Image Cam {}'.format(idx + 1), color_image)
+            cv2.namedWindow('Color Image Cam {}'.format(serial_numbers[idx]), cv2.WINDOW_NORMAL)
+            cv2.imshow('Color Image Cam {}'.format(serial_numbers[idx]), color_image)
         
         key = cv2.waitKey(1)
         if key & 0xFF == ord('q') or key == 27:

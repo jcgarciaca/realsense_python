@@ -42,8 +42,8 @@ try:
                 cv2.imwrite('images/depth_camera_{}.png'.format(idx + 1), depth_colormap)
 
             # show image
-            cv2.namedWindow('Depth Image Cam {}'.format(idx + 1), cv2.WINDOW_NORMAL)
-            cv2.imshow('Depth Image Cam {}'.format(idx + 1), depth_colormap)
+            cv2.namedWindow('Depth Image Cam {}'.format(serial_numbers[idx]), cv2.WINDOW_NORMAL)
+            cv2.imshow('Depth Image Cam {}'.format(serial_numbers[idx]), depth_colormap)
         
         key = cv2.waitKey(1)
         if key & 0xFF == ord('q') or key == 27:

@@ -39,8 +39,8 @@ try:
                 cv2.imwrite('images/infrared_camera_{}.png'.format(idx + 1), infrared_image)
 
             # show image
-            cv2.namedWindow('Infrared Image Cam {}'.format(idx + 1), cv2.WINDOW_NORMAL)
-            cv2.imshow('Infrared Image Cam {}'.format(idx + 1), infrared_image)
+            cv2.namedWindow('Infrared Image Cam {}'.format(serial_numbers[idx]), cv2.WINDOW_NORMAL)
+            cv2.imshow('Infrared Image Cam {}'.format(serial_numbers[idx]), infrared_image)
         
         key = cv2.waitKey(1)
         if key & 0xFF == ord('q') or key == 27:
