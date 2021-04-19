@@ -20,7 +20,7 @@ for idx in range(len(devices_)):
     sensors.append(pipelines[idx].get_active_profile().get_device().query_sensors()[1])
     sensors[idx].set_option(rs.option.enable_auto_exposure, True)
 
-save_image = True
+save_image = False
 try:
     while True:
         for idx in range(len(devices_)):
