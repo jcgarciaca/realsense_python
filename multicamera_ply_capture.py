@@ -24,9 +24,9 @@ colorizer = rs.colorizer()
 
 today = datetime.now().strftime('%d_%m_%Y')
 time_execution = datetime.now().strftime('%H_%M_%S')
-root_folder = os.path.join(str(Path.home()), 'Documents', 'data', 'pointcloud', today)
+root_folder = os.path.join(str(Path.home()), 'Documents', 'data', today)
 if not os.path.exists(root_folder):
-    os.mkdir(root_folder)
+    os.makedirs(root_folder)
 current_idx = None
 try:
     for idx in range(len(devices_)):
@@ -35,7 +35,10 @@ try:
         colorized = colorizer.process(frames)
 
         # Create save_to_ply object
-        ply = rs.save_to_ply(os.path.join(root_folder, 'pointcloud_camera_{}_{}.ply'.format(serial_numbers[idx], time_execution)))
+        ply_folder = os.path.join(root_folder, serial_numbers[idx], 'pointcloud')
+        if not os.path.exists(ply_folder):
+            os.makedirs(ply_folder)
+        ply = rs.save_to_ply(os.path.join(ply_folder, 'pointcloud_camera_{}_{}.ply'.format(serial_numbers[idx], time_execution)))
 
         # Set options to the desired values
         ply.set_option(rs.save_to_ply.option_ply_binary, True)

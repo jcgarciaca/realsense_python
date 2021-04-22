@@ -24,9 +24,9 @@ for idx in range(len(devices_)):
 
 today = datetime.now().strftime('%d_%m_%Y')
 time_execution = datetime.now().strftime('%H_%M_%S')
-root_folder = os.path.join(str(Path.home()), 'Documents', 'data', 'depth', today)
+root_folder = os.path.join(str(Path.home()), 'Documents', 'data', today)
 if not os.path.exists(root_folder):
-    os.mkdir(root_folder)
+    os.makedirs(root_folder)
 save_image = True
 current_idx = None
 try:
@@ -45,7 +45,10 @@ try:
         depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
         
         if save_image:
-            cv2.imwrite(os.path.join(root_folder, 'depth_camera_{}_{}.png'.format(serial_numbers[idx], time_execution)), depth_colormap)
+            img_folder = os.path.join(root_folder, serial_numbers[idx], 'depth')
+            if not os.path.exists(img_folder):
+                os.makedirs(img_folder)
+            cv2.imwrite(os.path.join(img_folder, 'depth_camera_{}_{}.png'.format(serial_numbers[idx], time_execution)), depth_colormap)
         
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))

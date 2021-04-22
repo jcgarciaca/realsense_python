@@ -28,9 +28,9 @@ for idx in range(len(devices_)):
 
 today = datetime.now().strftime('%d_%m_%Y')
 time_execution = datetime.now().strftime('%H_%M_%S')
-root_folder = os.path.join(str(Path.home()), 'Documents', 'data', 'color', today)
+root_folder = os.path.join(str(Path.home()), 'Documents', 'data', today)
 if not os.path.exists(root_folder):
-    os.mkdir(root_folder)
+    os.makedirs(root_folder)
 save_image = False
 current_idx = None
 cnt = 0
@@ -51,7 +51,10 @@ try:
             color_image = np.asanyarray(color_frame.get_data())
             
             if save_image:
-                cv2.imwrite(os.path.join(root_folder, 'color_camera_{}_{}.png'.format(serial_numbers[idx], time_execution)), color_image)
+                img_folder = os.path.join(root_folder, serial_numbers[idx], 'color')
+                if not os.path.exists(img_folder):
+                    os.makedirs(img_folder)
+                cv2.imwrite(os.path.join(img_folder, 'color_camera_{}_{}.png'.format(serial_numbers[idx], time_execution)), color_image)
         cnt += 1
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
