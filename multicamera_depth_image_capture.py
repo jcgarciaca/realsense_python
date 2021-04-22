@@ -48,7 +48,7 @@ try:
             img_folder = os.path.join(root_folder, serial_numbers[idx], 'depth')
             if not os.path.exists(img_folder):
                 os.makedirs(img_folder)
-            cv2.imwrite(os.path.join(img_folder, 'depth_camera_{}_{}.png'.format(serial_numbers[idx], time_execution)), depth_colormap)
+            cv2.imwrite(os.path.join(img_folder, 'depth_camera__{}__{}__{}.png'.format(serial_numbers[idx], today, time_execution)), depth_colormap)
         
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))

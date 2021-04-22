@@ -38,7 +38,7 @@ try:
         ply_folder = os.path.join(root_folder, serial_numbers[idx], 'pointcloud')
         if not os.path.exists(ply_folder):
             os.makedirs(ply_folder)
-        ply = rs.save_to_ply(os.path.join(ply_folder, 'pointcloud_camera_{}_{}.ply'.format(serial_numbers[idx], time_execution)))
+        ply = rs.save_to_ply(os.path.join(ply_folder, 'pointcloud_camera__{}__{}__{}.ply'.format(serial_numbers[idx], today, time_execution)))
 
         # Set options to the desired values
         ply.set_option(rs.save_to_ply.option_ply_binary, True)

@@ -54,7 +54,7 @@ try:
                 img_folder = os.path.join(root_folder, serial_numbers[idx], 'color')
                 if not os.path.exists(img_folder):
                     os.makedirs(img_folder)
-                cv2.imwrite(os.path.join(img_folder, 'color_camera_{}_{}.png'.format(serial_numbers[idx], time_execution)), color_image)
+                cv2.imwrite(os.path.join(img_folder, 'color_camera__{}__{}__{}.png'.format(serial_numbers[idx], today, time_execution)), color_image)
         cnt += 1
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
