@@ -35,6 +35,7 @@ save_image = False
 current_idx = None
 cnt = 0
 limit = 100
+created_files = []
 try:
     while cnt < limit:
         if cnt == limit - 1:
@@ -54,10 +55,17 @@ try:
                 img_folder = os.path.join(root_folder, serial_numbers[idx], 'color')
                 if not os.path.exists(img_folder):
                     os.makedirs(img_folder)
-                cv2.imwrite(os.path.join(img_folder, 'color_camera__{}__{}__{}.png'.format(serial_numbers[idx], today, time_execution)), color_image)
+                filename = os.path.join(img_folder, 'color_camera__{}__{}__{}.png'.format(serial_numbers[idx], today, time_execution))
+                cv2.imwrite(filename, color_image)
+                created_files.append(filename)
         cnt += 1
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
 finally:
     for idx in range(len(devices_)):
         pipelines[idx].stop()
+
+if len(created_files) > 0:
+    log_file = os.path.join(str(Path.home()), 'Documents', 'data', 'to_process_color.txt')
+    with open(log_file, 'w') as filehandle:
+        filehandle.writelines("%s\n" % value for value in created_files)

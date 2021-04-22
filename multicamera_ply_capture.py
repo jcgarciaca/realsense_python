@@ -28,6 +28,7 @@ root_folder = os.path.join(str(Path.home()), 'Documents', 'data', today)
 if not os.path.exists(root_folder):
     os.makedirs(root_folder)
 current_idx = None
+created_files = []
 try:
     for idx in range(len(devices_)):
         current_idx = idx
@@ -38,7 +39,8 @@ try:
         ply_folder = os.path.join(root_folder, serial_numbers[idx], 'pointcloud')
         if not os.path.exists(ply_folder):
             os.makedirs(ply_folder)
-        ply = rs.save_to_ply(os.path.join(ply_folder, 'pointcloud_camera__{}__{}__{}.ply'.format(serial_numbers[idx], today, time_execution)))
+        filename = os.path.join(ply_folder, 'pointcloud_camera__{}__{}__{}.ply'.format(serial_numbers[idx], today, time_execution))
+        ply = rs.save_to_ply(filename)
 
         # Set options to the desired values
         ply.set_option(rs.save_to_ply.option_ply_binary, True)
@@ -46,8 +48,14 @@ try:
 
         # Apply the processing block to the frameset which contains the depth frame and the texture
         ply.process(colorized)
+        created_files.append(filename)
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
 finally:
     for idx in range(len(devices_)):
         pipelines[idx].stop()
+
+if len(created_files) > 0:
+    log_file = os.path.join(str(Path.home()), 'Documents', 'data', 'to_process_ply.txt')
+    with open(log_file, 'w') as filehandle:
+        filehandle.writelines("%s\n" % value for value in created_files)

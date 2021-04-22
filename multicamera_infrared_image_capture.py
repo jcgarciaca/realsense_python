@@ -29,6 +29,7 @@ if not os.path.exists(root_folder):
     os.makedirs(root_folder)
 save_image = True
 current_idx = None
+created_files = []
 try:
     for idx in range(len(devices_)):
         current_idx = idx
@@ -45,9 +46,16 @@ try:
             img_folder = os.path.join(root_folder, serial_numbers[idx], 'infrared')
             if not os.path.exists(img_folder):
                 os.makedirs(img_folder)
-            cv2.imwrite(os.path.join(img_folder, 'infrared_camera__{}__{}__{}.png'.format(serial_numbers[idx], today, time_execution)), infrared_image)
+            filename = os.path.join(img_folder, 'infrared_camera__{}__{}__{}.png'.format(serial_numbers[idx], today, time_execution))
+            cv2.imwrite(filename, infrared_image)
+            created_files.append(filename)
 except:
     print('Error with camera: {} S/N: {}'.format(current_idx + 1, serial_numbers[current_idx]))
 finally:
     for idx in range(len(devices_)):
         pipelines[idx].stop()
+
+if len(created_files) > 0:
+    log_file = os.path.join(str(Path.home()), 'Documents', 'data', 'to_process_infrared.txt')
+    with open(log_file, 'w') as filehandle:
+        filehandle.writelines("%s\n" % value for value in created_files)
